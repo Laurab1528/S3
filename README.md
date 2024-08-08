@@ -104,5 +104,7 @@ This guide provides the necessary steps to create an Amazon S3 bucket, configure
            - name: Sync files to S3
              run: |
                aws s3 sync . s3://epam-course1528 --exclude ".git/*" --exclude ".github/*" --delete
+
+     final url:http://epam-course1528.s3-website.us-east-2.amazonaws.com
      ```
 
