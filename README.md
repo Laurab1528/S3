@@ -17,6 +17,9 @@ This guide provides the necessary steps to create an Amazon S3 bucket, configure
    - Click on **Create bucket**.
      ![image](https://github.com/user-attachments/assets/d3cca523-53f7-494c-899a-d77a0202b942)
 
+     ![image](https://github.com/user-attachments/assets/ec3d61e0-1984-4b83-b240-90d0daaa4139)
+
+
 4. **Configure the Bucket for Static Website Hosting**:
    - Select your bucket from the list.
    - Go to the **Properties** tab.
