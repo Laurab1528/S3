@@ -56,7 +56,7 @@ This guide provides the necessary steps to create an Amazon S3 bucket, configure
    - Add your `index.html` file to the repository.
    - Commit and push the changes:
      ```bash
-     cd my-static-website
+     
      git add index.html
      git commit -m "Add initial static website files"
      git push origin main
