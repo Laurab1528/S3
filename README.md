@@ -47,15 +47,6 @@ This guide provides the necessary steps to create an Amazon S3 bucket, configure
 
 ## 2. Create a GitHub Repository
 
-1. **Log in to GitHub**:
-   - Access [GitHub](https://github.com/) and log in with your credentials.
-
-2. **Create a New Repository**:
-   - Click on the **+** icon in the upper right corner and select **New repository**.
-   - **Repository name**: Enter a name for your repository (e.g., `my-static-website`).
-   - **Description**: Optionally, add a description.
-   - **Public**: Select **Public** if you want the repository to be public.
-   - Click on **Create repository**.
 
 3. **Add Files to the Repository**:
    - Clone the repository locally using the command:
