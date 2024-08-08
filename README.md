@@ -1,87 +1,89 @@
-# Guía para Desplegar un Sitio Web Estático en Amazon S3 con GitHub Actions
+# Guide to Deploy a Static Website on Amazon S3 with GitHub Actions
 
-Esta guía proporciona los pasos necesarios para crear un bucket en Amazon S3, configurar un repositorio en GitHub y utilizar GitHub Actions para desplegar un sitio web estático en el bucket de S3.
+This guide provides the necessary steps to create an Amazon S3 bucket, configure a GitHub repository, and use GitHub Actions to deploy a static website to the S3 bucket.
 
-## 1. Crear un Bucket de S3 para Hosting de Sitios Web Estáticos
+## 1. Create an S3 Bucket for Static Website Hosting
 
-1. **Inicia sesión en la Consola de AWS**:
-   - Accede a [AWS Management Console](https://aws.amazon.com/console/) e inicia sesión con tus credenciales.
+1. **Log in to the AWS Console**:
+   - Access the [AWS Management Console](https://aws.amazon.com/console/) and log in with your credentials.
 
-2. **Navega a Amazon S3**:
-   - Busca y selecciona **S3** en la consola de AWS.
+2. **Navigate to Amazon S3**:
+   - Search for and select **S3** in the AWS console.
 
-3. **Crear un Nuevo Bucket**:
-   - Haz clic en **Create bucket**.
-   - **Nombre del bucket**: epam-course1528
-   - **Región**: us-east-2
-   - Haz clic en **Create bucket**.
+3. **Create a New Bucket**:
+   - Click on **Create bucket**.
+   - **Bucket name**: `epam-course1528`
+   - **Region**: `us-east-2`
+   - Click on **Create bucket**.
      ![image](https://github.com/user-attachments/assets/d3cca523-53f7-494c-899a-d77a0202b942)
 
+4. **Configure the Bucket for Static Website Hosting**:
+   - Select your bucket from the list.
+   - Go to the **Properties** tab.
+   - In the **Static website hosting** section, click on **Edit**.
+   - Enable the **Enable** option.
+   - **Index document**: Enter `index.html`.
+   - Click on **Save changes**.
 
-4. **Configurar el Bucket para Hosting de Sitios Web Estáticos**:
-   - Selecciona tu bucket en la lista.
-   - Ve a la pestaña **Properties**.
-   - En la sección **Static website hosting**, haz clic en **Edit**.
-   - Habilita la opción **Enable**.
-   - **Index document**: Introduce `index.html`.
-   - Haz clic en **Save changes**.
-
-5. **Configurar los Permisos del Bucket**:
-   - Ve a la pestaña **Permissions**.
-   - En **Bucket Policy**, añade la siguiente política JSON para permitir acceso público:
+5. **Configure Bucket Permissions**:
+   - Go to the **Permissions** tab.
+   - In **Bucket Policy**, add the following JSON policy to allow public access:
      ```json
-    {
-    	"Version": "2012-10-17",
-    	"Statement": [
-    		{
-    			"Effect": "Allow",
-    			"Action": [
-    				"s3:PutObject",
-    				"s3:DeleteObject",
-    				"s3:GetObject"
-    			],
-    			"Resource": "arn:aws:s3:::epam-course1528/*"
-    		}
-    	]
-    }
+     {
+       "Version": "2012-10-17",
+       "Statement": [
+         {
+           "Effect": "Allow",
+           "Action": [
+             "s3:PutObject",
+             "s3:DeleteObject",
+             "s3:GetObject"
+           ],
+           "Resource": "arn:aws:s3:::epam-course1528/*"
+         }
+       ]
+     }
      ```
 
+## 2. Create a GitHub Repository
 
-## 2. Crear un Repositorio en GitHub
+1. **Log in to GitHub**:
+   - Access [GitHub](https://github.com/) and log in with your credentials.
 
-1. **Inicia sesión en GitHub**:
-   - Accede a [GitHub](https://github.com/) e inicia sesión con tus credenciales.
+2. **Create a New Repository**:
+   - Click on the **+** icon in the upper right corner and select **New repository**.
+   - **Repository name**: Enter a name for your repository (e.g., `my-static-website`).
+   - **Description**: Optionally, add a description.
+   - **Public**: Select **Public** if you want the repository to be public.
+   - Click on **Create repository**.
 
-2. **Crear un Nuevo Repositorio**:
-   - Haz clic en el icono **+** en la esquina superior derecha y selecciona **New repository**.
-   - **Repository name**: Introduce un nombre para tu repositorio (por ejemplo, `my-static-website`).
-   - **Description**: Opcionalmente, añade una descripción.
-   - **Public**: Selecciona **Public** si deseas que el repositorio sea público.
-   - Haz clic en **Create repository**.
-
-3. **Añadir Archivos al Repositorio**:
-   - Clona el repositorio localmente usando el comando:
+3. **Add Files to the Repository**:
+   - Clone the repository locally using the command:
      ```bash
-     git clone https://github.com/Laurab1528/S3.git   ```
-      
+     git clone https://github.com/Laurab1528/S3.git
+     ```
+   - Add your `index.html` file to the repository.
+   - Commit and push the changes:
+     ```bash
+     cd my-static-website
      git add index.html
      git commit -m "Add initial static website files"
      git push origin main
      ```
 
-## 3. Configurar GitHub Actions para Desplegar en S3
+## 3. Configure GitHub Actions to Deploy to S3
 
-1. **Configurar Secretos en GitHub**:
-   - En tu repositorio en GitHub, ve a **Settings** > **Secrets and variables** > **Actions**.
-   - Haz clic en **New repository secret** para añadir los siguientes secretos:
-     - **Nombre del Secreto:** `AWS_ACCESS_KEY_ID`
-       - **Valor del Secreto:** Tu `Access Key ID` de AWS.
-     - **Nombre del Secreto:** `AWS_SECRET_ACCESS_KEY`
-       - **Valor del Secreto:** Tu `Secret Access Key` de AWS.
+1. **Set Up Secrets in GitHub**:
+   - In your GitHub repository, go to **Settings** > **Secrets and variables** > **Actions**.
+   - Click on **New repository secret** to add the following secrets:
+     - **Secret Name:** `AWS_ACCESS_KEY_ID`
+       - **Secret Value:** Your AWS `Access Key ID`.
+     - **Secret Name:** `AWS_SECRET_ACCESS_KEY`
+       - **Secret Value:** Your AWS `Secret Access Key`.
 
-2. **Crear el Archivo de Flujo de Trabajo**:
-   - En tu repositorio, crea el directorio `.github/workflows` si no existe.
-   - Dentro de este directorio, crea un archivo llamado `deploy.yml` con el siguiente contenido:
+2. **Create the Workflow File**:
+   - In your repository, create the `.github/workflows` directory if it does not exist.
+   - Inside this directory, create a file named `deploy.yml` with the following content:
      ```yaml
      name: Deploy to S3
 
@@ -109,5 +111,4 @@ Esta guía proporciona los pasos necesarios para crear un bucket en Amazon S3, c
              run: |
                aws s3 sync . s3://epam-course1528 --exclude ".git/*" --exclude ".github/*" --delete
      ```
-
 
